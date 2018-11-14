@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+                
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+                
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Wish List</title>
+</head>
+<body>
+    
+    <a href='/logout'>Logout</a>
+    <h2>Hello, {{request.session.username}}</h2><br/>
+    <p>Your Wish List:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Item</td>
+                <td>Added By</td>
+                <td>Date Added</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for product in user_products %}
+            <tr>
+                <td><a href='/main/show/{{product.id}}'>{{product.product_name}}</a></td>
+                <td>{{product.created_by.name}}</td>
+                <td>{{product.created_at}}</td>
+                <td><a href='/main/removefromlist/{{product.id}}'>Remove from my Wishlist</a></td>
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+    <br>
+    
+    <p>Other User's Wish List:</p>
+    <table>
+        <thead>
+            <tr>
+                <td>Item</td>
+                <td>Added By</td>
+                <td>Date Added</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for product in other_products %}
+            <tr>
+                <td><a href='/main/show/{{product.id}}'>{{product.product_name}}</a></td>
+                <td>{{product.created_by.name}}</td>
+                <td>{{product.created_at}}</td>
+                <td><a href='/main/addtolist/{{product.id}}'>Add to my Wishlist</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href='/main/add'>Add Item</a>
+    
+
+</body>
+</html>
